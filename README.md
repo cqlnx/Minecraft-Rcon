@@ -6,11 +6,13 @@ A functional Minecraft RCON client for Python, designed to be as short as possib
 
 ## The One-Liner
 
-The core of this project is a functional client condensed into a single line of code.
+The core of this project is a functional client condensed into a single line of code. It handles the socket connection, authentication, and a command loop.
 <details>
 <summary>Click to view the code</summary>
 
-```import socket,struct,random,getpass,sys as s;h,p=input("Host: "),int(input("Port: "));c=socket.socket();c.connect((h,p));pck=lambda t,b:struct.pack("<iii",8+len(b:=b.encode()+b"\0\0"),random.randint(1,2**31-1),t)+b;rec=lambda:(lambda n,d:(struct.unpack("<ii",d[:8])[0],d[8:-2]))((n:=struct.unpack("<i",c.recv(4))[0]),c.recv(n));c.sendall(pck(3,getpass.getpass()));i,_=rec();i==0 and (i:=rec()[0]);i==-1 and exit();[c.sendall(pck(2,k)) or print(rec()[1].decode(),end="") for k in iter(lambda:input("\n> "), "")] ```
+```python
+import socket,struct,random,getpass,sys as s;h,p=input("Host: "),int(input("Port: "));c=socket.socket();c.connect((h,p));pck=lambda t,b:struct.pack("<iii",8+len(b:=b.encode()+b"\0\0"),random.randint(1,2**31-1),t)+b;rec=lambda:(lambda n,d:(struct.unpack("<ii",d[:8])[0],d[8:-2]))((n:=struct.unpack("<i",c.recv(4))[0]),c.recv(n));c.sendall(pck(3,getpass.getpass()));i,_=rec();i==0 and (i:=rec()[0]);i==-1 and exit();[c.sendall(pck(2,k)) or print(rec()[1].decode(),end="") for k in iter(lambda:input("\n> "), "")]
+```
 </details>
 
 ---
